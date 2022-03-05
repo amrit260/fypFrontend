@@ -1,0 +1,22 @@
+.wish-item {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid black; */
+  /* justify-content: center; */
+  height: 50px;
+  width: 200px;
+  margin-top: 3px;
+  margin-bottom: 13px;
+}
+
+.wish-item img {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.wish-item-title {
+  text-transform: capitalize;
+  font-size: 0.7em;
+  font-weight: 600;
+}

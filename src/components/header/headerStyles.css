@@ -1,0 +1,31 @@
+.nav-link {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.signout {
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  text-decoration: none im !important;
+}
+
+.navbar .navbar-nav div.nav-btn {
+  text-transform: capitalize;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  color: #fff;
+  transition: all 0.5s;
+  /* padding: 15px 0px; */
+  margin-top: 5px;
+}
+
+.navbar .navbar-nav div.nav-btn:hover {
+  text-decoration: none i !important;
+}
+
+.background-header .navbar-nav div.nav-link {
+  color: #1e1e1e !important;
+}

@@ -1,0 +1,19 @@
+.action-btns {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btns button {
+  border: none;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+.action-btns button:hover {
+  transform: scale(1.05);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition-duration: 200ms;
+}

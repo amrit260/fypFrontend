@@ -1,0 +1,43 @@
+.wishlist {
+  position: absolute;
+  width: 240px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  /* border: 1px solid #4285f4; */
+  border-top: 0;
+  box-shadow: 3px 8px 7px 5px rgba(0, 0, 0, 0.2);
+
+  background-color: white;
+  top: 80px;
+  right: 80px;
+  z-index: 5;
+}
+.wish-items {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  color: black;
+}
+.wish-items button {
+  margin-top: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
