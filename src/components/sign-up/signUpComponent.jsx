@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FormInput from '../formInput/formInputComponent';
-import { Link } from 'react-router-dom';
 import { signUp } from '../../redux/auth/authAction';
 import { useDispatch, useSelector } from 'react-redux';
 import './signUpStyles.css';
@@ -11,15 +10,14 @@ import axios from 'axios';
 
 
 const SignUp = () => {
+
     toast.configure()
     const state = useSelector(state => state);
     let navigate = useNavigate();
     useEffect(() => {
         if (localStorage.getItem('loggedIn')) {
 
-            toast.success('already logged inn', {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
+
             navigate(`/dashboard/app`);
         }
 

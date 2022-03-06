@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 // material
 import {
   Link,
@@ -13,6 +13,7 @@ import {
   InputAdornment,
   FormControlLabel
 } from '@mui/material';
+import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
@@ -23,8 +24,12 @@ import { login } from 'src/redux/auth/authAction';
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({});
+  const [isSubmitting,setSubmitting] = useState(false);
   const dispatch = useDispatch();
+  const users = useSelector(state => state.auth);
+  
+  
+
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -39,11 +44,28 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: (user) => {
       dispatch(login(user));
-      navigate('/dashboard/app', { replace: true });
+      setSubmitting(true);
+      if(users.loggedIn){
+        navigate('/dashboard/app', { replace: true });
+      }
+      setTimeout(() => {
+        setSubmitting(false);
+        }, 2000);
+
+      
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  useEffect(() => {
+    if (users.loggedIn) {
+      navigate('/dashboard/app', );
+      }
+      }, [users.loggedIn]);
+      
+      
+      
+
+  const { errors, touched, values, handleSubmit, getFieldProps } = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -89,7 +111,7 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
+          <Link component={RouterLink} style={{color:'#007bff'}} variant="subtitle2" to="#" underline="hover">
             Forgot password?
           </Link>
         </Stack>
@@ -99,9 +121,10 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
+           
           loading={isSubmitting}
         >
-          Login
+          Loginoo
         </LoadingButton>
       </Form>
     </FormikProvider>

@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import './headerStyles.css'
 import WishList from '../wish-list/wishList'
 import { hideOrShowWishlist } from '../../redux/wishList/wishListActions'
+import { useDispatch, useSelector } from 'react-redux'
+import LogOutBtn from '../logoutBtn'
+import AccountPopover from '../../layouts/dashboard/AccountPopover'
+
+
 const Header = (props) => {
+
+  const state = useSelector(state => state);
+  const dispatch = useDispatch()
+  const handleWishList = () => {
+    dispatch(hideOrShowWishlist())
+  }
+
 
 
   return <div>
@@ -75,16 +86,19 @@ const Header = (props) => {
                 <Link className="nav-link" data-toggle="collapse" data-target="#navbarResponsive" to="/contact" >Contact Us</Link>
               </li>
               <li className="nav-item" >
-                <div onClick={props.wishListHidden} data-toggle="collapse" data-target="#navbarResponsive" className="nav-link nav-btn"  >My wishlist <i className="fas fa-heart"></i></div>
+                <div onClick={handleWishList} data-toggle="collapse" data-target="#navbarResponsive" className="nav-link nav-btn"  > cart </div>
               </li>
-              {props.currentUser ?
-                <li className="nav-item " >
-                  {/* <Link className="nav-link"  data-toggle="collapse" data-target="#navbarResponsive"  to='/'> <img src="" alt="img" height='50' width='50'/>  {props.currentUser.displayName ?props.currentUser.displayName.split(' ')[0]:''}</Link> */}
-                  <div className="signout nav-link nav-btn" onClick={() => { return auth.signOut() }}>{props.currentUser.displayName.split(' ')[0].toUpperCase()}   <i className="fas fa-sign-out-alt"></i></div>
+              {state.auth.loggedIn ?
+                <li className="nav-item" >
+                  <AccountPopover />
                 </li>
+
+
                 : <li className="nav-item" >
-                  <Link className=" nav-link" to="/login" data-toggle="collapse" data-target="#navbarResponsive" >Sign In</Link>
-                </li>}
+                  <Link className=" nav-link" to="/auth/login" data-toggle="collapse" data-target="#navbarResponsive" >Sign In</Link>
+                </li>
+
+              }
 
 
 
@@ -92,7 +106,7 @@ const Header = (props) => {
             </ul>
 
           </div>
-          {props.hideWishList ? '' : <WishList />}
+          {state.wishList.hidden ? '' : <WishList />}
         </div>
       </nav>
     </header>
@@ -100,15 +114,6 @@ const Header = (props) => {
   </div>
 }
 
-const mapStateToProps = (state) => {
-  return ({  // state = rootReducer
 
-    currentUser: state.user.currentUser,
-    hideWishList: state.wishList.hidden
-  })
-}
-const mapDispatchToProps = dispatch => ({
-  wishListHidden: () => { return dispatch(hideOrShowWishlist()) }                         // value = value of 
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header

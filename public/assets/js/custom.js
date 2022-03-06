@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
   );
 
   if ($('.header-text-homepage').length == 0) {
-    $('header').addClass('background-header');
+    $('#header').addClass('background-header');
   }
 
   // console.log(homepage);
@@ -30,15 +30,15 @@ jQuery(document).ready(function ($) {
       // console.log('on homepage');
       var scroll = $(window).scrollTop();
       var box = $('.header-text').height() + 100;
-      var header = $('header').height();
+      var header = $('#header').height();
 
       if (scroll >= box - header) {
-        $('header').addClass('background-header');
+        $('#header').addClass('background-header');
       } else {
-        $('header').removeClass('background-header');
+        $('#header').removeClass('background-header');
       }
     } else {
-      $('header').addClass('background-header');
+      $('#header').addClass('background-header');
     }
   });
 });

@@ -14,23 +14,37 @@ export const signUp = (user) => {
       .post('http://localhost:3000/api/v1/users/signup', user)
       .then((res) => {
         console.log(res);
-        localStorage.setItem('token', res.data.token);
+        
+        if (res.status === 201) {
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('user', res.data.data.user);
         localStorage.setItem('loggedIn', true);
-        if (res.status === 'success') {
-          toast.success('Sign up successfully', {
-            position: toast.POSITION.BOTTOM_RIGHT_CORNER
-          });
-        }
-        dispatch({
+           dispatch({
           type: 'SIGN_UP',
           token: res.data.token
         });
+        }
+        else{
+          throw new Error(res);
+        }
+       
       })
       .catch((err) => {
-        console.log(err.response);
-        toast(err.response.data.error.name, {
-          position: toast.POSITION.BOTTOM_RIGHT
-        });
+        console.log(err.response)
+        if(err.response){
+          let error = err.response.data.message.split(' ')
+          let message = ''
+          error[0] ==='E11000' ? message = 'User already exists' : message = err.response.data.message
+           toast.error(err.response.status === 404? 'login failed':message, {
+         position: toast.POSITION.BOTTOM_RIGHT
+       });
+        }
+        else{
+          toast.error('network error', {
+            position: toast.POSITION.BOTTOM_RIGHT
+          });
+        }
+       
       });
   };
 };
@@ -45,24 +59,50 @@ export const login = (loginCredintials) => {
     axios
       .post('http://localhost:3000/api/v1/users/login', loginCredintials)
       .then((res) => {
-        console.log(res);
-        localStorage.setItem('token', res.data.token);
+        
+        console.log();
+        
+        if (res.status=== 200) {
+          console.log(res)
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('user', JSON.stringify(res.data.data.user));
         localStorage.setItem('loggedIn', true);
-        if (res.status === 'success') {
-          toast.success('Sign up successfully', {
-            position: toast.POSITION.BOTTOM_RIGHT_CORNER
-          });
-        }
-        dispatch({
+           
+
+           dispatch({
           type: 'LOG_IN',
-          token: res.data.token
+          data: res.data
         });
+        }
+        else{
+           throw new Error(res);
+        }
+       
+       
       })
       .catch((err) => {
-        console.log(err.response);
-        toast(err.response.data.error.name, {
+
+        
+        
+         if(err.response){
+           
+            toast.error(err.response.status === 404? 'login failed':err.response.data.message, {
           position: toast.POSITION.BOTTOM_RIGHT
         });
+         }
+         else{
+          toast.error('network error', {
+            position: toast.POSITION.BOTTOM_RIGHT
+          });
+         }
+       
       });
   };
 };
+
+export const logout = () => {
+  localStorage.clear();
+  return (dispatch) =>{
+   dispatch({type:'LOG_OUT'})
+  };
+}

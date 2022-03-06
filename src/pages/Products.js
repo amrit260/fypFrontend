@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
+import {useSelector,useDispatch} from 'react-redux';
 // components
 import Page from '../components/Page';
 import {
@@ -11,13 +12,15 @@ import {
   ProductFilterSidebar
 } from '../sections/@dashboard/products';
 //
-import PRODUCTS from '../_mocks_/products';
+
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
-
+  // console.log(useSelector(state=>state))
+  // const tours = useSelector(state => state.tours.data);
+  
   const formik = useFormik({
     initialValues: {
       gender: '',
@@ -47,10 +50,10 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Dashboard: Products | Minimal-UI">
+    <Page title="Dashboard: Tours | Explore Nepal">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+         Tours and Destinations
         </Typography>
 
         <Stack
@@ -61,18 +64,19 @@ export default function EcommerceShop() {
           sx={{ mb: 5 }}
         >
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
+            {/* <ProductFilterSidebar
               formik={formik}
               isOpenFilter={openFilter}
               onResetFilter={handleResetFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
-            />
+            /> */}
             <ProductSort />
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+        {/* <ProductList products={tours} /> */}
+        <h1>coming soon</h1>
         <ProductCartWidget />
       </Container>
     </Page>

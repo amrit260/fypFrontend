@@ -1,13 +1,17 @@
 import React from "react"
+import Page from "src/components/Page"
 import Destinations from "../../components/destinations/destinationsComponent"
 import PopularTours from "../../components/popular/popularTours"
 
-const DestinationPage = ()=>{
+const DestinationPage = () => {
 
     return <React.Fragment>{window.scrollTo(0, 0)}
-        <Destinations/>
-        <PopularTours/>
+        <Page title="Destinations | Explore Nepal">
+            <Destinations />
+            <PopularTours />
+        </Page>
     </React.Fragment>
+
 
 }
 

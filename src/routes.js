@@ -12,14 +12,21 @@ import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import HomePage from './pages/homepage/homePage';
+import { useDispatch } from 'react-redux';
 import HeaderComponent from './components/header/header-component';
 import SignIn from './components/sign-in/signInComponent';
 import SignUp from './components/sign-up/signUpComponent';
+import Footer from './components/footer/footerComponent';
+import TourPage from './pages/tour/tourPage';
+import DestinationPage from './pages/destinations/destinationsPage';
+import ContactPage from './pages/contact/contactPage';
+// import LogOut from './components/logoutBtn';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   toast.configure();
+  
   const toastOptions = {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 3000,
@@ -44,27 +51,40 @@ export default function Router() {
       ]
     },
     {
-      path: '/',
-      element: (
-        <div>
-          <HeaderComponent />
-          <Outlet />
-        </div>
-      ),
+      path: '/auth',
+     
       children: [
-        { path: '/', element: <HomePage /> },
         {
           path: 'login',
           element: <Login />
         },
         {
-          path: 'signup',
-          element: <SignUp />
+          path: 'register',
+          element: <Register />
         },
-        { path: '404', element: <NotFound /> },
-        { path: '*', element: <Navigate to="/404" /> }
       ]
     },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    {
+      path: '/',
+      element: (
+        <div>
+          <HeaderComponent />
+          <Outlet />
+          <Footer/>
+        </div>
+      ),
+      children: [
+        { path: '/', element: <HomePage /> },
+        { path: '/tours/:tourID', element: <TourPage /> },
+        { path: '/destinations', element: <DestinationPage /> },
+        { path: '/contact', element: <ContactPage /> },
+
+        
+        { path: '404', element: <NotFound /> },
+        // { path: '/logout', element: <LogOut /> },
+        { path: '*', element: <NotFound/> }
+      ]
+    },
+    { path: '*', element: <NotFound replace /> }
   ]);
 }

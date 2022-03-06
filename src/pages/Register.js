@@ -43,15 +43,13 @@ export default function Register() {
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
         Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="/auth/login">
           Login
         </Link>
       </AuthLayout>
 
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Manage the job more effectively with Minimal
-        </Typography>
+        
         <img alt="register" src="/static/illustrations/illustration_register.png" />
       </SectionStyle>
 
@@ -59,19 +57,19 @@ export default function Register() {
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
+              Create account on Explore Nepal!
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
+              Let the travel begin!
             </Typography>
           </Box>
 
-          <AuthSocial />
+          
 
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
+            By registering, I agree to Explore Nepal&nbsp;
             <Link underline="always" color="textPrimary">
               Terms of Service
             </Link>

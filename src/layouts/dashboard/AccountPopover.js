@@ -8,6 +8,8 @@ import Iconify from '../../components/Iconify';
 import MenuPopover from '../../components/MenuPopover';
 //
 import account from '../../_mocks_/account';
+import Logo from 'src/components/Logo';
+import LogOutBtn from 'src/components/logoutBtn';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +22,7 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    linkTo: '#'
+    linkTo: '/dashboard/app'
   },
   {
     label: 'Settings',
@@ -106,9 +108,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
-            Logout
-          </Button>
+          <LogOutBtn/>
         </Box>
       </MenuPopover>
     </>

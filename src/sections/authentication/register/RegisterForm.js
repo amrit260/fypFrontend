@@ -1,44 +1,76 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, alertTitleClasses } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import { signUp } from 'src/redux/auth/authAction';
+import { useDispatch } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+ const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('loggedIn')) {
+
+
+        navigate(`/dashboard/app`);
+    }
+
+})
+
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string()
+    name: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
       .required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    password: Yup.string().min(8,'enter the min of 8 characters').max(15,'password should not contain more than 15 characters').required('Password is required!'),
+    passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'passwords not matching').required('Confirm password is required')
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      name:'',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm:''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: async (values) => {
+      
+   
+        setSubmitting(true)
+         dispatch(signUp(values))
+         
+         
+         setTimeout(() => {
+            setSubmitting(false)
+         }, 1000);
+        
+      
+      
+       
+       
+     
     }
   });
-
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-
+  
+  // console.log(formik)
+  
+  
+  const { errors, touched, handleSubmit,  getFieldProps } = formik;
+  
+ 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -46,19 +78,12 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="First name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
+              label="Full Name"
+              {...getFieldProps('name')}
+              error={Boolean(touched.name && errors.name)}
+              helperText={touched.name && errors.name}
             />
 
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-            />
           </Stack>
 
           <TextField
@@ -89,10 +114,21 @@ export default function RegisterForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="passwordConfirm"
+            {...getFieldProps('passwordConfirm')}
+             
+            error={Boolean(touched.passwordConfirm && errors.passwordConfirm)}
+            helperText={touched.passwordConfirm && errors.passwordConfirm}
+          />
 
           <LoadingButton
             fullWidth
             size="large"
+            
             type="submit"
             variant="contained"
             loading={isSubmitting}

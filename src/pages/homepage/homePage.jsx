@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import WelcomeBanner from '../../components/welcome/welcomeBanner.component'
 import { setTours } from 'src/redux/tours/tourActions'
 import axios from 'axios'
+import Page from 'src/components/Page'
+import { localServerURL, remoteServerURL } from 'src/config'
 
 
 
@@ -36,14 +38,14 @@ const HomePage = () => {
 
 
    return <React.Fragment> {window.scrollTo(0, 0)}
-      <WelcomeBanner />
-      <CallToAction />
-      <TourComponent tourCount='3' />
-      <Caurosel />
-      <PopularTours key='homepage-popular-tours' />
-
+      <Page title="Homepage | Explore Nepal">
+         <WelcomeBanner />
+         <CallToAction />
+         <TourComponent tourCount='3' />
+         <Caurosel />
+         <PopularTours key='homepage-popular-tours' />
+      </Page>
    </React.Fragment>
-
 }
 
 export default HomePage

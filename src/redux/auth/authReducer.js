@@ -1,44 +1,43 @@
 import { toast } from 'react-toastify';
-import jwtDecode from 'jwt-decode';
+ 
 
 const initialState = {
   token: localStorage.getItem('token'),
-  name: null,
-  email: null,
-  id: null,
+  user: JSON.parse(localStorage.getItem('user')),
   loggedIn: localStorage.getItem('loggedIn') ? true : false
 };
 const authReducer = (state = initialState, action) => {
-  let user;
+ 
   switch (action.type) {
     case 'SIGN_UP':
       toast('Welcome to explore nepal', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
-
-      user = jwtDecode(action.token);
+ 
       return {
         ...state,
         token: action.token,
-        id: user.id,
+        user:action.data.user,
         loggedIn: true
       };
     case 'LOG_IN':
-      toast('Welcome to explore nepal', {
+      toast.success('Logged in successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
-
-      user = jwtDecode(action.token);
+       
+      
       return {
         ...state,
-        token: action.token,
-        id: user.id,
+        token: action.data.token,
+        user:action.data.data.user,
         loggedIn: true
       };
-    case 'SIGN_OUT':
+    case 'LOG_OUT':
+      localStorage.clear();
       return {
-        ...state,
-        currentUser: null
+      token:null,
+      id:null,
+      loggedIn:false
       };
     case 'SET_TOUR':
       return {

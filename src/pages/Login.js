@@ -7,8 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../sections/authentication/login';
-import AuthSocial from '../sections/authentication/AuthSocial';
-
+ 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -22,7 +21,7 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   maxWidth: 464,
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'flex-end',
   margin: theme.spacing(2, 0, 2, 2)
 }));
 
@@ -41,15 +40,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Explore Nepal">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link>
-      </AuthLayout>
+     
 
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+        <Typography variant="h3"   sx={{ px: 5, mt: 10, mb: 5 }}>
           Hi, Welcome Back
         </Typography>
         <img src="/static/illustrations/illustration_login.png" alt="login" />
@@ -58,8 +52,8 @@ export default function Login() {
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              LOGIN TO EXPLORE NEPAL
+            <Typography variant="h4" color="primary" gutterBottom>
+              LOGIN TO EXPLORE NEPALi
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
@@ -74,13 +68,16 @@ export default function Login() {
               display: { sm: 'none' }
             }}
           >
-            Don’t have an account?&nbsp;
-            <Link variant="subtitle2" component={RouterLink} to="register" underline="hover">
-              Get started
-            </Link>
+           
           </Typography>
         </ContentStyle>
       </Container>
+      <AuthLayout>
+        Don’t have an account? &nbsp;
+        <Link underline="none"   variant="subtitle2" component={RouterLink} to="/auth/register">
+          Get started
+        </Link>
+      </AuthLayout>
     </RootStyle>
   );
 }
