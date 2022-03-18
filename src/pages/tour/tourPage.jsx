@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import ActionButtons from '../../components/action-buttons/actionButtonsComponent'
-import { connect } from 'react-redux'
+import BookAndWishBtns from '../../components/action-buttons/BookAndWish'
 import axios from 'axios'
 import './tourPageStyles.css'
 import Page from 'src/components/Page'
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
-
+import { serverURL } from 'src/config'
+import Maps from 'src/components/maps'
 
 
 const TourPage = (props) => {
@@ -16,16 +18,25 @@ const TourPage = (props) => {
 
     const { tourID } = useParams()
 
+    const progressBarStyles = {
+
+
+        marginTop: '25vh',
+        marginBottom: '25vh',
+        marginLeft: '45vw',
+
+    }
+
 
     useEffect(() => {
 
         axios
-            .get(`http://127.0.0.1:3000/api/v1/tours/${tourID}`)
+            .get(`${serverURL}/api/v1/tours/${tourID}`)
             .then((res) => {
                 if (res.status = 'success') {
-                    console.log("hiii")
+
                     setTour(res.data.data.data)
-                    console.log(tour)
+
 
                 }
 
@@ -51,7 +62,10 @@ const TourPage = (props) => {
 
 
 
-    if (!tour) return <div style={{ marginTop: '90px' }}>tour not found</div>
+    if (!tour) return <Box style={progressBarStyles} sx={{ width: '100vw' }}>
+        <CircularProgress />
+    </Box>
+
 
     console.log('this is tour')
     console.log(tour)
@@ -70,16 +84,16 @@ const TourPage = (props) => {
                 <div className="tour-fact-list">
                     <div> <span className="text-secondary display-5">Difficulty : </span> <span className='text-dark'>  {tour.difficulty}</span> </div>
 
-                    <div> <span className="text-secondary display-5">Max members : </span> <span className='text-dark'>  {tour.members} peoples</span> </div>
+                    <div> <span className="text-secondary display-5">Max members : </span> <span className='text-dark'>  {tour.maxGroupSize} </span> </div>
 
                 </div>
                 <div className="tour-fact-list">
                     <div> <span className="text-secondary display-5">Price : $</span> <span className='text-dark'>  {tour.price}</span> </div>
-                    <div> <span className="text-secondary display-5">Rating : </span> <span className='text-dark'>  {tour.rating}</span> </div>
+                    <div> <span className="text-secondary display-5">Rating : </span> <span className='text-dark'>  {tour.ratingsAverage}</span> </div>
 
 
                 </div>
-                <h5 className='banner-content-title'>Tour guides</h5>
+
 
                 <div className="tour-fact-list">
 
@@ -87,7 +101,7 @@ const TourPage = (props) => {
                    <div> <span className="text-secondary display-5">Tour Guide : </span> <span className='text-dark'>  {tour.guides[0].name}</span> </div>  */}
 
                 </div>
-                <ActionButtons item={tour}></ActionButtons>
+                <BookAndWishBtns item={tour}></BookAndWishBtns>
 
 
 
@@ -95,7 +109,7 @@ const TourPage = (props) => {
 
             </div>
             <div className="banner-image-parent">
-                <div className="banner-image" style={{ backgroundImage: `url('http://127.0.0.1:3000/img/tours/${tour.images[0]}')` }}></div></div>
+                <div className="banner-image" style={{ backgroundImage: `url('${serverURL}/img/tours/${tour.images[0]}')` }}></div></div>
         </div>
 
 
@@ -104,7 +118,7 @@ const TourPage = (props) => {
             {tour.images.map((image, index) => {
                 if (index >= 3) return;
                 return <div className="tour-img">
-                    <img src={`http://127.0.0.1:3000/img/tours/${image}`} alt="" />
+                    <img src={`${serverURL}/img/tours/${image}`} alt="" />
                 </div>
             })}
 
@@ -116,10 +130,13 @@ const TourPage = (props) => {
         </div>
 
 
+        <Maps />
+
+
 
         <div className="tour-banner about-tour">
 
-            <div className=" about-tour-image" style={{ backgroundImage: `url('http://127.0.0.1:3000/img/tours/${tour.images[tour.images.length - 1]}')` }}></div>
+            <div className=" about-tour-image" style={{ backgroundImage: `url('${serverURL}/img/tours/${tour.images[tour.images.length - 1]}')` }}></div>
 
             <div className="banner-content about-tour-content">
                 <h5 className='banner-content-title text-capitalize'>About {tour.name}</h5>

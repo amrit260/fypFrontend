@@ -28,8 +28,10 @@
 //     "react/function-component-definition": [
 //         2,
 //         {
-//           "namedComponents": "function-declaration",
-//         },
+            
+//             "namedComponents": "arrow-function",
+//             "unnamedComponents": "arrow-function"
+//         }
 //       ],
 //     "import": 0,
 //     "max-len": 0,

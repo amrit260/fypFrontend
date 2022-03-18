@@ -4,7 +4,6 @@ import './headerStyles.css'
 import WishList from '../wish-list/wishList'
 import { hideOrShowWishlist } from '../../redux/wishList/wishListActions'
 import { useDispatch, useSelector } from 'react-redux'
-import LogOutBtn from '../logoutBtn'
 import AccountPopover from '../../layouts/dashboard/AccountPopover'
 
 

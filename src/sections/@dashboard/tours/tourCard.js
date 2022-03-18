@@ -8,7 +8,8 @@ import { fCurrency } from '../../../utils/formatNumber';
 //
 import Label from '../../../components/Label';
 import ColorPreview from '../../../components/ColorPreview';
-
+import { serverURL } from 'src/config';
+import UpdateAndDeleteTourBtn from 'src/components/action-buttons/UpdateAndDeleteTourBtns';
 // ----------------------------------------------------------------------
 
 const ProductImgStyle = styled('img')({
@@ -25,8 +26,9 @@ ShopProductCard.propTypes = {
   product: PropTypes.object
 };
 
-export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+export default function ShopProductCard({ tour }) {
+ 
+  const status = 'sale';
 
   return (
     <Card>
@@ -46,18 +48,18 @@ export default function ShopProductCard({ product }) {
             {status}
           </Label>
         )}
-        <ProductImgStyle alt={name} src={cover} />
+        <ProductImgStyle alt={tour.name} src={`${serverURL}/img/tours/${tour.images[0]}`} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {tour.name}
           </Typography>
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={colors} /> */}
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -67,12 +69,13 @@ export default function ShopProductCard({ product }) {
                 textDecoration: 'line-through'
               }}
             >
-              {priceSale && fCurrency(priceSale)}
+              {tour.price && fCurrency(tour.price)}
             </Typography>
             &nbsp;
-            {fCurrency(price)}
+            {fCurrency(tour.price)}
           </Typography>
         </Stack>
+        <UpdateAndDeleteTourBtn tour = {tour}></UpdateAndDeleteTourBtn>
       </Stack>
     </Card>
   );

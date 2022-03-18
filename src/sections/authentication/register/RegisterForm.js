@@ -51,7 +51,9 @@ export default function RegisterForm() {
    
         setSubmitting(true)
          dispatch(signUp(values))
-         
+         if(localStorage.getItem('loggedIn')){
+          navigate('/dashboard/app', { replace: true });
+        }
          
          setTimeout(() => {
             setSubmitting(false)

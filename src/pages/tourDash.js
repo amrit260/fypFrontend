@@ -5,21 +5,25 @@ import { Container, Stack, Typography } from '@mui/material';
 import {useSelector,useDispatch} from 'react-redux';
 // components
 import Page from '../components/Page';
+import { Alert,AlertTitle } from '@mui/material';
 import {
   ProductSort,
   ProductList,
   ProductCartWidget,
   ProductFilterSidebar
-} from '../sections/@dashboard/products';
+} from '../sections/@dashboard/tours';
+import AddTourBtn from 'src/components/action-buttons/AddTourBtn';
 //
 
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceShop() {
+export default function Tours() {
   const [openFilter, setOpenFilter] = useState(false);
-  // console.log(useSelector(state=>state))
-  // const tours = useSelector(state => state.tours.data);
+  
+  
+
+  const tours = useSelector(state => state.tours);
   
   const formik = useFormik({
     initialValues: {
@@ -55,7 +59,7 @@ export default function EcommerceShop() {
         <Typography variant="h4" sx={{ mb: 5 }}>
          Tours and Destinations
         </Typography>
-
+        <AddTourBtn ></AddTourBtn>
         <Stack
           direction="row"
           flexWrap="wrap-reverse"
@@ -75,9 +79,14 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        {/* <ProductList products={tours} /> */}
-        <h1>coming soon</h1>
+       {tours.length !=0?<ProductList tours={tours} />:<Alert severity="info">
+
+  <AlertTitle>Tours Not found</AlertTitle>
+  Tours are not added yet  — <strong>add tours now!</strong>
+</Alert>} 
+       
         <ProductCartWidget />
+        
       </Container>
     </Page>
   );

@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router';
+import {serverURL} from '../../config';
 export const signUp = (user) => {
   toast.configure();
   console.log('inside authaction');
@@ -11,17 +12,17 @@ export const signUp = (user) => {
 
   return (dispatch) => {
     axios
-      .post('http://localhost:3000/api/v1/users/signup', user)
+      .post(`${serverURL}/api/v1/users/signup`, user)
       .then((res) => {
-        console.log(res);
+        
         
         if (res.status === 201) {
-          localStorage.setItem('token', res.data.token);
-          localStorage.setItem('user', res.data.data.user);
+          localStorage.setItem('jwt', res.data.token);
+          localStorage.setItem('user', JSON.stringify(res.data.data.user));
         localStorage.setItem('loggedIn', true);
            dispatch({
           type: 'SIGN_UP',
-          token: res.data.token
+          data:res.data
         });
         }
         else{
@@ -30,7 +31,7 @@ export const signUp = (user) => {
        
       })
       .catch((err) => {
-        console.log(err.response)
+     
         if(err.response){
           let error = err.response.data.message.split(' ')
           let message = ''
@@ -57,14 +58,14 @@ export const login = (loginCredintials) => {
 
   return (dispatch) => {
     axios
-      .post('http://localhost:3000/api/v1/users/login', loginCredintials)
+      .post(`${serverURL}/api/v1/users/login`, loginCredintials)
       .then((res) => {
         
         console.log();
         
         if (res.status=== 200) {
           console.log(res)
-          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('jwt', res.data.token);
           localStorage.setItem('user', JSON.stringify(res.data.data.user));
         localStorage.setItem('loggedIn', true);
            

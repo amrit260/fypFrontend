@@ -1,2 +1,1 @@
-export const localServerURL = 'http://localhost:3000/'
-export const remoteServerURL = ''
+export const  serverURL = 'http://localhost:3000'

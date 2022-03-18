@@ -35,9 +35,19 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
+
+
+
+
+
+
 // ----------------------------------------------------------------------
 
 export default function Login() {
+
+  
+
+
   return (
     <RootStyle title="Login | Explore Nepal">
      
@@ -48,6 +58,7 @@ export default function Login() {
         </Typography>
         <img src="/static/illustrations/illustration_login.png" alt="login" />
       </SectionStyle>
+       
 
       <Container maxWidth="sm">
         <ContentStyle>
@@ -56,6 +67,9 @@ export default function Login() {
               LOGIN TO EXPLORE NEPALi
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            {/* <Typography sx={{ color: 'text.secondary' }}>For testing</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Email : admin@gmail.com</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Password : admin123</Typography> */}
           </Stack>
 
           <LoginForm />

@@ -1,9 +1,9 @@
-const initialState = null;
+const initialState = [];
 
 const tourReducer = (previousStateOfTour = initialState, action) => {
   switch (action.type) {
     case 'SET_TOUR':
-      return { ...previousStateOfTour, ...action.tours }; // ...action.payload = list of tours [x,x,x] action.payload = tours:[x,x,x]
+      return [  ...action.tours ]; // ...action.payload = list of tours [x,x,x] action.payload = tours:[x,x,x]
     default:
       return previousStateOfTour;
   }
