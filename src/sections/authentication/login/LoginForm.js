@@ -11,13 +11,16 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  FormControlLabel
+  FormControlLabel,
+  Dialog,
+  DialogTitle
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import { login } from 'src/redux/auth/authAction';
+import ForgotPassword from '../resetPassword/forgotPassword';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +30,7 @@ export default function LoginForm() {
   const [isSubmitting,setSubmitting] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(state => state.auth);
+  const [open,setOpen] = useState(false);
   
   
 
@@ -111,9 +115,15 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} style={{color:'#007bff'}} variant="subtitle2" to="#" underline="hover">
+          <Link component={RouterLink} onClick={()=>setOpen(true)} style={{color:'#007bff'}} variant="subtitle2" to="#" underline="hover">
             Forgot password?
           </Link>
+          <Dialog onClose={()=>setOpen(false)} open={open}>
+             
+          <ForgotPassword/>
+
+        </Dialog>
+
         </Stack>
 
         <LoadingButton

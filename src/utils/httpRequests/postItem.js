@@ -25,9 +25,13 @@ const AddBooking =async (itemType,url,data)=>{
          data:data,
           
       });
-      if ((res.status = 'success')) {
+      if ((res.status == 200)) {
          // setTours(res.data.data);
         console.log(res.data)
+        if(itemType === 'Forgot Password' ){
+          return true
+        }
+
         return res.data.data.data;
          // setToursOnThisPage()
 

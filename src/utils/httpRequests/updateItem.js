@@ -21,19 +21,27 @@ const updateBooking =async (itemType,url,data)=>{
          data,
           
       });
-      if ((res.status = 'success')) {
+      console.log(res)
+      if ((res.status === 200)) {
          // setTours(res.data.data);
-        
+         if(itemType === 'Reset Password' || 'Password'){
+
+            return res.data.data
+         }
+       
         return res.data.data.data;
          // setToursOnThisPage()
 
       }
-      throw new Error(`Failed to Update  ${itemType}`);
+      if((res.status ===401)){
+
+         throw new Error(`${res.message}`);
+      }
       
 
     } catch(err){
-      console.log(err);
-      toast.error(`Failed to update ${itemType}`,{
+      console.log(err.response.data.message);
+      toast.error(`Failed to update ${itemType} : ${err.response.data.message}`,{
          position: toast.POSITION.BOTTOM_RIGHT
       })
       return ;

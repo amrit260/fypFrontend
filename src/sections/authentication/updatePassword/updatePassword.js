@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useDispatch,useSelector } from 'react-redux';
+import updateItem from 'src/utils/httpRequests/updateItem';
 // material
 import {
   Link,
@@ -19,6 +20,8 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/Iconify';
 import { login } from 'src/redux/auth/authAction';
 import { Box } from '@mui/system';
+import { toast } from 'react-toastify';
+import { serverURL } from 'src/config';
 
 // ----------------------------------------------------------------------
 
@@ -45,12 +48,14 @@ export default function UpdatePasswordForm() {
       passwordConfirm: ''
     },
     validationSchema: LoginSchema,
-    onSubmit: (user) => {
-      dispatch(login(user));
-      setSubmitting(true);
-      if(users.loggedIn){
-        navigate(`${user.role ==='admin'?'/dashboard/app':'/dashboard/myaccount'}`, { replace: true });
+    onSubmit:async (user) => {
+      const res = await updateItem('Password',`${serverURL}/api/v1/users/updateMyPassword`,user)
+      if(res){
+        toast.success('password changed successfully',{
+          position:toast.POSITION.TOP_CENTER
+        })
       }
+      setSubmitting(true);
       setTimeout(() => {
         setSubmitting(false);
         }, 2000);
@@ -59,12 +64,7 @@ export default function UpdatePasswordForm() {
     }
   });
 
-  useEffect(() => {
-    if (users.loggedIn) {
-      navigate('/dashboard/myaccount', );
-      }
-      }, [users.loggedIn]);
-      
+ 
       
       
 
@@ -110,6 +110,7 @@ export default function UpdatePasswordForm() {
           />
           <TextField
             fullWidth
+            type='password'
              label=" Confirm password"
             {...getFieldProps('passwordConfirm')}
              

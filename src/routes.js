@@ -23,6 +23,7 @@ import UserBookings from './layouts/dashboard/bookings/userBookings';
 import ManageBookings from './layouts/dashboard/bookings/manageBookings';
 import TourComponent from './components/Tour/tourComponent'
 import SearchCards from './components/search/searchCard';
+import ResetPasswordForm from './sections/authentication/resetPassword/resetPassword';
 
 // import LogOut from './components/logoutBtn';
 
@@ -54,7 +55,9 @@ export default function Router() {
         { path: 'user', element:user.role ==='admin'? <User />:<Navigate to="/"/>},
         { path: 'managebookings', element:user.role ==='admin'? <ManageBookings />:<Navigate to="/"/>},
         { path: 'products', element:user.role ==='admin'? <Products />:<Navigate to="/"/>},  
-        { path: 'blog', element: <Blog /> }
+        { path: 'blog', element: <Blog /> },
+        { path: 'resetPassword/:token', element: <ResetPasswordForm /> },
+
       ]
     }:<Login/>,
     {
