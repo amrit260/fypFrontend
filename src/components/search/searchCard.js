@@ -2,7 +2,7 @@
 import {useState,useEffect} from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './searchCards.css'
-import getItems from 'src/utils/tourRequests/getItems'
+import getItems from 'src/utils/httpRequests/getItems'
 import { serverURL } from 'src/config'
 import { AlertTitle,Alert,Grid } from '@mui/material'
 import SearchComponent from './searchComponent'

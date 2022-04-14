@@ -6,7 +6,7 @@ import { serverURL } from "src/config"
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import BookingCard from "./bookingCard";
 import { setBookings } from "src/redux/bookings/bookingAction";
-import getItems from "src/utils/tourRequests/getItems"
+import getItems from "src/utils/httpRequests/getItems"
 
 
 

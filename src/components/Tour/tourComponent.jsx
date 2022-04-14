@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './tourComponentStyles.css'
-import getItems from 'src/utils/tourRequests/getItems'
+import getItems from 'src/utils/httpRequests/getItems'
 import { serverURL } from 'src/config'
 
 

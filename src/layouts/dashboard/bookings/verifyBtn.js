@@ -1,10 +1,10 @@
 import {useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { Button, ButtonGroup, Dialog, DialogTitle, Typography } from '@mui/material';
-import updateItem from 'src/utils/tourRequests/updateItem';
+import updateItem from 'src/utils/tourRequests/updateTours';
 import { serverURL } from 'src/config';
-import updateBooking from 'src/utils/tourRequests/updateBooking';
-import getItems from 'src/utils/tourRequests/getItems';
+import updateBooking from 'src/utils/httpRequests/updateItem';
+import getItems from 'src/utils/httpRequests/getItems';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { setBookings } from 'src/redux/bookings/bookingAction';

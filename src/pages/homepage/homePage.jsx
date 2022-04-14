@@ -8,8 +8,7 @@ import WelcomeBanner from '../../components/welcome/welcomeBanner.component'
 import { setTours } from 'src/redux/tours/tourActions'
 import axios from 'axios'
 import Page from 'src/components/Page'
-import { serverURL } from 'src/config'
-import getItems from 'src/utils/tourRequests/getItems'
+
 
 
 

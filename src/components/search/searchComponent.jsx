@@ -1,7 +1,7 @@
 // import {Link, Redirect, useHistory} from 'react-router-dom'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import getItems from 'src/utils/tourRequests/getItems'
+import getItems from 'src/utils/httpRequests/getItems'
 
 const SearchBox = () => {
 

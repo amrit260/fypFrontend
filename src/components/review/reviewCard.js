@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Grid, Typography,Paper,Avatar,Rating,Box,Button,Dialog,DialogTitle } from '@mui/material'
 import { serverURL } from 'src/config'
 import CloseIcon from '@mui/icons-material/Close';
-import deleteItem from 'src/utils/tourRequests/deleteItem'
+import deleteItem from 'src/utils/httpRequests/deleteItem'
 import Label from '../Label'
 import './reviewCard.css'
 

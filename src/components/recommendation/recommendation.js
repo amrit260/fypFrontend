@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import popularTours from "../popular/popularTours";
-import getItems from 'src/utils/tourRequests/getItems';
+import getItems from 'src/utils/httpRequests/getItems';
 import { serverURL } from 'src/config';
 
 const gridItemStyles = {

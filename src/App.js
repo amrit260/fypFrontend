@@ -10,7 +10,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 import { useDispatch } from 'react-redux';
 import { setTours } from './redux/tours/tourActions';
-import getItems from './utils/tourRequests/getItems';
+import getItems from './utils/httpRequests/getItems';
 import { serverURL } from './config';
 // ----------------------------------------------------------------------
 

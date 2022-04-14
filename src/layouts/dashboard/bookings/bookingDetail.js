@@ -6,7 +6,7 @@ import { serverURL } from "src/config"
 import Label from '../../../components/Label';
 import EmailIcon from '@mui/icons-material/Email';
 import SendIcon from '@mui/icons-material/Send'
-import AddItem from "src/utils/tourRequests/addItem";
+import AddItem from "src/utils/tourRequests/addTours";
 import { setBookings } from "src/redux/bookings/bookingAction";
 import VerifyButton from "./verifyBtn";
 

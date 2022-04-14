@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {Paper,Typography,Rating,TextField,Box,Button} from '@mui/material'
-import AddBooking from 'src/utils/httpRequests/addBooking';
+import AddBooking from 'src/utils/httpRequests/postItem';
 import { serverURL } from 'src/config';
 import { toast } from 'react-toastify';
 

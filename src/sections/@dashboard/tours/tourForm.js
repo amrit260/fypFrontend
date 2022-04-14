@@ -32,9 +32,9 @@ import {
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import updateItem from 'src/utils/tourRequests/updateItem';
-import getItems from 'src/utils/tourRequests/getItems';
-import AddItem from 'src/utils/tourRequests/addItem';
+import updateItem from 'src/utils/tourRequests/updateTours';
+import getItems from 'src/utils/httpRequests/getItems';
+import AddItem from 'src/utils/tourRequests/addTours';
 import { setTours } from 'src/redux/tours/tourActions';
 import { serverURL } from 'src/config';
 import { toast } from 'react-toastify';

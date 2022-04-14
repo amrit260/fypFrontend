@@ -3,9 +3,9 @@ import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, ButtonGroup } from '@mui/material';
 import toaster from 'react-toastify'
-import deleteItem from 'src/utils/tourRequests/deleteItem';
+import deleteItem from 'src/utils/httpRequests/deleteItem';
 import { serverURL } from 'src/config';
-import getItems from 'src/utils/tourRequests/getItems';
+import getItems from 'src/utils/httpRequests/getItems';
 import { setTours } from 'src/redux/tours/tourActions';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';

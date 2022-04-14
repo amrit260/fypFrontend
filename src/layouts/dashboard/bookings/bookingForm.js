@@ -6,7 +6,7 @@ import Label from '../../../components/Label';
 import EmailIcon from '@mui/icons-material/Email';
 import SendIcon from '@mui/icons-material/Send'
 import { setBookings } from "src/redux/bookings/bookingAction";
-import addBooking from 'src/utils/httpRequests/addBooking';
+import addBooking from 'src/utils/httpRequests/postItem';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
