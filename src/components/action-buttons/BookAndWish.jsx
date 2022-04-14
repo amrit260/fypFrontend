@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, ButtonGroup } from '@mui/material';
+import { Button, ButtonGroup, Dialog, DialogTitle, Typography } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 import { AddWishItem, hideOrShowWishlist } from '../../redux/wishList/wishListActions'
-import { toast } from 'react-toastify';
+import { toast, useToast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import BookingForm from 'src/layouts/dashboard/bookings/bookingForm';
 
 
 
 
 const AddToWishListButton = ({ item }) => {
+
+
     const dispatch = useDispatch();
 
     const handleClick = () => {
@@ -28,12 +32,45 @@ const AddToWishListButton = ({ item }) => {
 
 }
 
-const BookButton = ({ item }) => <Button color="secondary" >Book Now</Button>
+const BookButton = ({ tour }) => {
+    const [bookingDialogStatus, handleBookingDialog] = useState(false)
+    const isLoggedIn = useSelector((state) => state.auth.loggedIn)
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate()
 
-const BookAndWishBtns = ({ item }) => (<ButtonGroup>
-    <AddToWishListButton item={item} />
-    <BookButton item={item} />
-</ButtonGroup>)
+    const handleClickOpen = () => {
+        if (!isLoggedIn) {
+            toast.info('Please login to book a tour', {
+                position: toast.POSITION.TOP_CENTER
+            })
+            return navigate('/auth/login')
+
+
+        }
+        handleBookingDialog(true)
+    }
+
+    return <><Button onClick={handleClickOpen} color="secondary" >Book Now</Button>
+
+        <Dialog maxWidth='md' fullWidth={true} onClose={() => {
+            handleBookingDialog(false)
+        }} open={bookingDialogStatus}>
+            <DialogTitle ><Typography align="center" color='primary'  >Booking Details</Typography></DialogTitle>
+
+            <BookingForm tour={tour} user={user} />
+
+
+        </Dialog></>
+}
+
+const BookAndWishBtns = ({ tour }) => (<ButtonGroup>
+    <AddToWishListButton item={tour} />
+    <BookButton tour={tour} />
+
+</ButtonGroup>
+
+
+)
 
 
 export default BookAndWishBtns;

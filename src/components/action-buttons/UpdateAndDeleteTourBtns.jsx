@@ -62,7 +62,7 @@ const DeleteTourBtn = ({ tourID }) => {
     const handleClick = async () => {
         handleClose();
         let tours;
-        let isDeleted = await deleteItem(`${serverURL}/api/v1/tours`, tourID);
+        let isDeleted = await deleteItem('Tour', `${serverURL}/api/v1/tours/${tourID}`);
 
         if (isDeleted) {
             tours = await getItems('tours', `${serverURL}/api/v1/tours`);
@@ -119,8 +119,8 @@ const UpdateTourBtn = ({ tour }) => {
 
 
     return <><Button color='success' key={tour._id} endIcon={<ArrowForwardIosIcon />} onClick={handleClickOpen} >Update</Button>
-        <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>Update this tour</DialogTitle>
+        <Dialog maxWidth='md' fullWidth={true} onClose={handleClose} open={open}>
+            <DialogTitle >Update this tour</DialogTitle>
             <TourForm tour={tour} handleClose={handleClose} actionType='update tour'></TourForm>
 
         </Dialog></>

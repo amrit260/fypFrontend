@@ -2,30 +2,15 @@
 import axios from 'axios'
 import { serverURL } from 'src/config';
 import { toast } from 'react-toastify';
+import {convertToFormData} from './convertToFormData'
+
 
 
 const updateItem =async (itemType,url,data)=>{
    console.log(data)
-  const formdata = new FormData()
-  Object.entries(data).forEach(
-   ([key, value]) =>{
-      if(key==='images'){
-         alert(value)
-         for(let i=0;i<value.length;i++){
-            formdata.append('images',value[i])
-         }
-         
-      }
-      else{
+ 
+   const formdata = convertToFormData(data)
 
-         formdata.append(key,value)
-      }
-   } 
-);
-   
-   
-    
-   console.log(formdata)
    try{
       let res = await axios({
           method: 'patch',

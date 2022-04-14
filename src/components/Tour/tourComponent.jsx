@@ -1,32 +1,20 @@
 
-import { connect } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import './tourComponentStyles.css'
-
+import getItems from 'src/utils/tourRequests/getItems'
 import { serverURL } from 'src/config'
 
 
 
-const TourComponent = (props) => {
-
-  const queryString = useLocation().search
+const TourComponent = () => {
 
 
-  if (!props.tours) return ''
+
+  // if (!props.tours) return ''
 
 
-  let tours;
-  if (queryString) {
-    const members = new URLSearchParams(queryString).get('members')
-    const duration = new URLSearchParams(queryString).get('duration')
-    const category = new URLSearchParams(queryString).get('category')
-    tours = props.tours.filter(item => category.includes(item.category.toString()) || members === item.members || duration === item.duration)
-    console.log(members)
-  }
-
-  else {
-    tours = props.tours
-  }
+  const tours = useSelector(state => state.tours)
 
 
 
@@ -36,7 +24,7 @@ const TourComponent = (props) => {
 
   // }
   const tourCards = tours.map((tour, index) => {
-    if (index < props.tourCount) {
+    if (index < 3) {
 
       return <div className="card" key={tour.id}>
         <div className="card-header text-capitalize card-dark display-6 text-dark text-center">
@@ -47,7 +35,7 @@ const TourComponent = (props) => {
 
           <div className="card-subtitle text-muted">Duration : {tour.duration} days</div>
           <p className="card-text">
-            {tour.description ? tour.description.slice(0, 100) : ''}...
+            {tour.description ? tour.summary.slice(0, 100) : ''}...
           </p>
           <Link to={`/tours/${tour.id}`} className="btn btn-primary btn-block">Read More </Link>
         </div>
@@ -57,13 +45,13 @@ const TourComponent = (props) => {
     return ''
   })
 
-  return <div className={`container ${props.fromSearch ? 'search-result' : ''}`}>{window.scrollTo(0, 0)}
+  return <div className={`container`}>{window.scrollTo(0, 0)}
     <div className="d-flex">
 
       <hr className="my-auto flex-grow-1" />
 
       <div className="px-4 text-uppercase visit-text text-primary" id="visit-text">
-        {props.fromSearch ? 'Your search results' : 'places to visit'}
+        places to visit
       </div>
 
       <hr className="my-auto flex-grow-1" />
@@ -80,11 +68,6 @@ const TourComponent = (props) => {
   </div>
 }
 
-const getTours = (state) => {
 
-  return {
-    tours: state.tours
-  }
-}
 
-export default connect(getTours, null)(TourComponent)
+export default TourComponent

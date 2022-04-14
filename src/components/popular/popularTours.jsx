@@ -38,7 +38,7 @@ const popularTours = ({ tours }) => {
           </p>
         </div>
         <div className="about-btn">
-          <BookAndWishBtns item={tour} key={tour.id}></BookAndWishBtns>
+          <BookAndWishBtns tour={tour} key={tour.id}></BookAndWishBtns>
         </div>
       </div>
     </div>

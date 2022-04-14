@@ -28,9 +28,9 @@ const AddTourBtn = ({ tour }) => {
 
 
     return <><Button color='success' endIcon={<AddIcon />} onClick={handleClickOpen} >Add Tour</Button>
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog maxWidth='md' fullWidth={true} onClose={handleClose} open={open}>
             <DialogTitle>Add a newtour</DialogTitle>
-            <TourForm tour={tour} handleClose={handleClose} actionType='add tour'></TourForm>
+            <TourForm handleClose={handleClose} actionType='add tour'></TourForm>
 
         </Dialog></>
 

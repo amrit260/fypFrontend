@@ -13,9 +13,9 @@ import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
-import sidebarConfig from './SidebarConfig';
+import {userSidebarConfig,AdminSidebarConfig} from './SidebarConfig';
 import { useSelector } from 'react-redux';
-
+import { serverURL } from 'src/config';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -67,9 +67,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
+        <Link underline="none" to="/profile" >
           <AccountStyle>
-            <Avatar src={user.image} alt="photoURL" />
+            <Avatar src={`${serverURL}/img/users/${user.photo}`} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {user.name}
@@ -81,8 +81,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </AccountStyle>
         </Link>
       </Box>
-
-      <NavSection navConfig={sidebarConfig} />
+      {
+        user.role === 'admin'?<NavSection navConfig={AdminSidebarConfig} />:<NavSection navConfig={userSidebarConfig} />
+      }
+      
 
       <Box sx={{ flexGrow: 1 }} />
 

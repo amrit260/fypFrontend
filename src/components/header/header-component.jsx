@@ -32,7 +32,7 @@ const Header = (props) => {
               </li>
             </ul>
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <ul className="right-icons">
               <li>
                 <a href="error.html"><i className="fa fa-facebook"></i></a>
@@ -43,12 +43,12 @@ const Header = (props) => {
               <li>
                 <a href="error.html"><i className="fa fa-linkedin"></i></a>
               </li>
-              {/* <li>
+              <li>
                 <a style={{fontSize:"12px"}} href="help.html">Help?</a>
-              </li> */}
+              </li>
 
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@ const Header = (props) => {
                 <Link className="nav-link" data-toggle="collapse" data-target="#navbarResponsive" to="/contact" >Contact Us</Link>
               </li>
               <li className="nav-item" >
-                <div onClick={handleWishList} data-toggle="collapse" data-target="#navbarResponsive" className="nav-link nav-btn"  > cart </div>
+                <div onClick={handleWishList} data-toggle="collapse" data-target="#navbarResponsive" className="nav-link nav-btn"  > Wishlist </div>
               </li>
               {state.auth.loggedIn ?
                 <li className="nav-item" >

@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
-import LogoOnlyLayout from './layouts/LogoOnlyLayout';
+
 import { Outlet } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Login from './pages/Login';
@@ -12,19 +12,25 @@ import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import HomePage from './pages/homepage/homePage';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import HeaderComponent from './components/header/header-component';
 import Footer from './components/footer/footerComponent';
 import TourPage from './pages/tour/tourPage';
 import DestinationPage from './pages/destinations/destinationsPage';
 import ContactPage from './pages/contact/contactPage';
+import MyAccount from './layouts/dashboard/myAccount/myAccount';
+import UserBookings from './layouts/dashboard/bookings/userBookings';
+import ManageBookings from './layouts/dashboard/bookings/manageBookings';
+import TourComponent from './components/Tour/tourComponent'
+import SearchCards from './components/search/searchCard';
+
 // import LogOut from './components/logoutBtn';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   toast.configure();
-  
+  const user = useSelector(state => state.auth.user);
   const toastOptions = {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 3000,
@@ -34,20 +40,23 @@ export default function Router() {
     draggable: true,
     progress: undefined
   };
-
-  let userLoggedIn = localStorage.getItem('loggedIn') ? true : false;
+ 
 
   return useRoutes([
+    user?
     {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'app', element:user.role ==='admin' ? <DashboardApp />:<p>page for user coming soon</p> },
+        { path: 'myaccount', element: <MyAccount/>} ,
+        { path: 'mybookings', element: <UserBookings/>}, 
+        { path: 'user', element:user.role ==='admin'? <User />:<Navigate to="/"/>},
+        { path: 'managebookings', element:user.role ==='admin'? <ManageBookings />:<Navigate to="/"/>},
+        { path: 'products', element:user.role ==='admin'? <Products />:<Navigate to="/"/>},  
         { path: 'blog', element: <Blog /> }
       ]
-    },
+    }:<Login/>,
     {
       path: '/auth',
      
@@ -76,6 +85,8 @@ export default function Router() {
         { path: '/tours/:tourID', element: <TourPage /> },
         { path: '/destinations', element: <DestinationPage /> },
         { path: '/contact', element: <ContactPage /> },
+        { path: '/search', element: <SearchCards/> },
+
 
         
         { path: '404', element: <NotFound /> },

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // material
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
@@ -7,13 +8,14 @@ import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '
 import Iconify from '../../components/Iconify';
 import MenuPopover from '../../components/MenuPopover';
 //
-import account from '../../_mocks_/account';
-import Logo from 'src/components/Logo';
+
 import LogOutBtn from 'src/components/logoutBtn';
+import { serverURL } from 'src/config';
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
+
+const ADMIN_MENU_OPTIONS = [
   {
     label: 'Home',
     icon: 'eva:home-fill',
@@ -22,18 +24,32 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    linkTo: '/dashboard/app'
+    linkTo: '/dashboard/myaccount'
   },
   {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-    linkTo: '#'
+    label: 'Dashboard',
+    icon: 'eva:pie-chart-2-fill',
+    linkTo: '/dashboard/app'
   }
 ];
+
+const USER_MENU_OPTIONS = [
+  {
+    label: 'Home',
+    icon: 'eva:home-fill',
+    linkTo: '/'
+  },
+  {
+    label: 'My Account',
+    icon: 'eva:person-fill',
+    linkTo: '/dashboard/myaccount'
+  }]
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const user = useSelector(state => state.auth.user);
+
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -44,8 +60,33 @@ export default function AccountPopover() {
     setOpen(false);
   };
 
+  const getMenuOptions = (MENU_OPTIONS) => {
+    return MENU_OPTIONS.map((option) => (
+      <MenuItem
+        key={option.label}
+        to={option.linkTo}
+        component={RouterLink}
+        onClick={handleClose}
+        sx={{ typography: 'body2', py: 1, px: 2.5 }}
+      >
+        <Iconify
+          icon={option.icon}
+          sx={{
+            mr: 2,
+            width: 24,
+            height: 24
+          }}
+        />
+
+        {option.label}
+      </MenuItem>
+    ))
+  }
+
   return (
     <>
+    
+    
       <IconButton
         ref={anchorRef}
         onClick={handleOpen}
@@ -66,9 +107,10 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={`${serverURL}/img/users/${user?.photo}`} alt="photoURL" />
+      
       </IconButton>
-
+      
       <MenuPopover
         open={open}
         onClose={handleClose}
@@ -77,38 +119,19 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {user?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user?.email}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 1 }} />
 
-        {MENU_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.label}
-            to={option.linkTo}
-            component={RouterLink}
-            onClick={handleClose}
-            sx={{ typography: 'body2', py: 1, px: 2.5 }}
-          >
-            <Iconify
-              icon={option.icon}
-              sx={{
-                mr: 2,
-                width: 24,
-                height: 24
-              }}
-            />
-
-            {option.label}
-          </MenuItem>
-        ))}
-
+        {user.role ==='admin'?getMenuOptions(ADMIN_MENU_OPTIONS):getMenuOptions(USER_MENU_OPTIONS)}
+        <LogOutBtn/>
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <LogOutBtn/>
+          
         </Box>
       </MenuPopover>
     </>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import BookAndWishBtns from '../../components/action-buttons/BookAndWish'
 import axios from 'axios'
@@ -9,14 +10,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 import { serverURL } from 'src/config'
-import Maps from 'src/components/maps'
+import Maps from 'src/components/Maps/maps'
+
+import Review from 'src/components/review/review'
+import Recommendations from 'src/components/recommendation/recommendation'
 
 
-const TourPage = (props) => {
+const TourPage = () => {
 
     const [tour, setTour] = useState(null)
+    const [review, setReview] = useState(null)
 
     const { tourID } = useParams()
+
 
     const progressBarStyles = {
 
@@ -28,6 +34,7 @@ const TourPage = (props) => {
     }
 
 
+
     useEffect(() => {
 
         axios
@@ -36,6 +43,7 @@ const TourPage = (props) => {
                 if (res.status = 'success') {
 
                     setTour(res.data.data.data)
+
 
 
                 }
@@ -101,7 +109,7 @@ const TourPage = (props) => {
                    <div> <span className="text-secondary display-5">Tour Guide : </span> <span className='text-dark'>  {tour.guides[0].name}</span> </div>  */}
 
                 </div>
-                <BookAndWishBtns item={tour}></BookAndWishBtns>
+                <BookAndWishBtns tour={tour}></BookAndWishBtns>
 
 
 
@@ -117,7 +125,7 @@ const TourPage = (props) => {
 
             {tour.images.map((image, index) => {
                 if (index >= 3) return;
-                return <div className="tour-img">
+                return <div key={index} className="tour-img">
                     <img src={`${serverURL}/img/tours/${image}`} alt="" />
                 </div>
             })}
@@ -130,7 +138,12 @@ const TourPage = (props) => {
         </div>
 
 
-        <Maps />
+        <Maps startLocation={tour.startLocation} locations={tour.locations} />
+        {/* <BookingForm></BookingForm> */}
+
+        <Review reviews={tour.reviews} avgRating={tour.ratingsAverage} totalRating={tour.ratingsQuantity} tour={tour._id} />
+
+        <Recommendations />
 
 
 

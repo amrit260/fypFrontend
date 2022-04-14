@@ -38,6 +38,8 @@ import AddItem from 'src/utils/tourRequests/addItem';
 import { setTours } from 'src/redux/tours/tourActions';
 import { serverURL } from 'src/config';
 import { toast } from 'react-toastify';
+import { ImageListItem,ImageList } from '@mui/material';
+import MapInput from 'src/components/Maps/mapInput';
 // component
 
 
@@ -45,16 +47,43 @@ import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
-export default function TourForm({ actionType, tour, handleClose }) {
+const ImageListfxn = ({images}) => {
+    console.log(images)
+    const itemData = []
+   
 
-    const update = actionType == 'update tour' ? true : false;
-
-    const formStyles = {
-        width: '80vw',
-        height: '80vh',
-        padding: '20px',
+    for(let i=0;i<images.length;i++){
+        itemData.push(URL.createObjectURL(images[i]))
     }
 
+    return <ImageList sx={{marginTop:'10px' }} cols={3} rowHeight={164}>
+    {itemData.map((item,index) => (
+      <ImageListItem key={index}>
+        <img
+          src={`${item}`}
+          srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+          alt={item.title}
+          loading="lazy"
+        />
+      </ImageListItem>
+    ))}
+  </ImageList>
+}
+
+export default function TourForm({ actionType, tour, handleClose }) {
+
+    const updateMode = actionType == 'update tour' ? true : false;
+    const [showImages, setShowImages] = useState(false);
+
+    const locationObj = {
+        type: 'Point',
+        coordinates: [85,27],
+        address: '',
+        description: '',
+        day: 0,
+    }
+
+   
     const [isSubmitting, setSubmitting] = useState(false);
     const dispatch = useDispatch();
 
@@ -85,18 +114,20 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
     const formik = useFormik({
         initialValues: {
-            name: update ? tour.name : '',
-            // startLocation: null,
+            name: updateMode ? tour.name : '',
+            startLocation:updateMode?tour.startLocation : locationObj,
 
             // startDates: [],
-            secretTour: false,
-            duration: update ? tour.duration : 0,
-            maxGroupSize: update ? tour.maxGroupSize : 0,
-            difficulty: update ? tour.difficulty : 'easy',
-            price: update ? tour.price : 0,
-            summary: update ? tour.summary : '',
-            activeStatus: update ? tour.activeStatus : true,
-            description: update ? tour.description : ''
+            secretTour: updateMode ? tour.secretTour : false,
+            duration: updateMode ? tour.duration : 0,
+            maxGroupSize: updateMode ? tour.maxGroupSize : 0,
+            difficulty: updateMode ? tour.difficulty : 'easy',
+            price: updateMode ? tour.price : 0,
+            summary: updateMode ? tour.summary : '',
+            locations: updateMode ? tour.locations : [],
+
+
+            description: updateMode ? tour.description : ''
         },
         validationSchema: TourSchema,
 
@@ -104,14 +135,46 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
     const { errors, touched, values, getFieldProps } = formik;
 
-    const handleImageUpload = (e) => {
+    const handleImageUpload = async (e) => {
 
-        formik.setFieldValue("images", e.currentTarget.files);
+      
 
+        // if no images return
+        setShowImages(true)
+        await  formik.setFieldValue("images", e.currentTarget.files);
+
+
+    }
+    const handleSwitchChange = () => {
+
+        formik.setFieldValue("secretTour", !values.secretTour);
+    }
+    
+    const handleLocationUpdate =  (flag,data) => {
+            // console.log(data)
+        if(flag){
+            formik.setFieldValue("startLocation", data);
+          
+        }
+        else{
+            // locations will only update in add mode
+            // if(!updateMode){
+
+                const arr = values.locations;
+            arr.push(data)
+            formik.setFieldValue("locations", arr);
+            // }
+            
+             
+        }
     }
 
     const submitForm = async (e) => {
         e.preventDefault();
+
+        if(values.locations.length<1){
+            formik.setFieldValue("locations", arr);
+        }
 
         //   dispatch(login(user));
         setSubmitting(true);
@@ -120,7 +183,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
             let tours;
             let isAdded = await AddItem('tour', `${serverURL}/api/v1/tours`, values);
 
-            if (isAdded) {                  
+            if (isAdded) {
                 tours = await getItems('tours', `${serverURL}/api/v1/tours`);
                 dispatch(setTours(tours));
                 toast.success('Tour Added Successfully'), {
@@ -170,8 +233,8 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
 
     return (
-        <Paper>
-            <Container maxWidth="lg" style={{ padding: '20px' }} >
+        
+            <Container maxWidth="xl" style={{ padding: '20px' }} >
                 <FormikProvider value={formik}>
                     <Form autoComplete="off" onSubmit={submitForm}>
 
@@ -182,7 +245,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
                         <Grid container alignItems="flex-start" justify='center' spacing={2}>
                             <Grid item xs={4}>
                                 <TextField
-                                    variant="filled"
+                                    variant="standard"
                                     autoComplete="name"
                                     type="name"
                                     label="Name of a tour"
@@ -195,7 +258,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
                                 <Select
 
                                     type="difficulty"
-                                    variant="filled"
+                                    variant="standard"
                                     {...getFieldProps('difficulty')}
                                     label="Difficulty"
 
@@ -212,7 +275,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
                                 <TextField
                                     type='number'
-                                    variant="filled"
+                                    variant="standard"
                                     label="Price"
                                     {...getFieldProps('price')}
 
@@ -233,7 +296,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
                                 <TextField
 
-                                    variant="filled"
+                                    variant="standard"
                                     type='number'
 
                                     label="Maximum member in a group"
@@ -247,7 +310,7 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
                                 <TextField
 
-                                    variant="filled"
+                                    variant="standard"
                                     label="Duration of a tour"
                                     {...getFieldProps('duration')}
 
@@ -255,7 +318,9 @@ export default function TourForm({ actionType, tour, handleClose }) {
                                     helperText={touched.duration && errors.duration}
                                 />
                             </Grid>
+                            
                             <Grid item xs={4}>
+
                                 <input
                                     name='images'
                                     accept="image/*"
@@ -267,11 +332,12 @@ export default function TourForm({ actionType, tour, handleClose }) {
                             </Grid>
 
                         </Grid>
+                        {showImages?<ImageListfxn images={values.images} />:null}
 
                         {/* third row */}
                         <Grid style={{ marginTop: '10px' }} container alignItems="flex-end" justify='center' spacing={2}>
                             <Grid item xs={4} >
-                                <FormControlLabel control={<Switch defaultChecked {...getFieldProps('activestatus')} color='success' />} label="Active Status" />
+                                <FormControlLabel control={<Switch onClick={handleSwitchChange} checked={values.secretTour}  color='success' />} label="Active Status" />
 
                             </Grid>
 
@@ -315,6 +381,11 @@ export default function TourForm({ actionType, tour, handleClose }) {
 
                         <Grid style={{ marginTop: '10px' }} container alignItems="flex-end" justify='center' spacing={2}>
                             <Grid item xs={12}>
+                                <MapInput handleLocationUpdate={handleLocationUpdate} />
+                            </Grid>
+                        </Grid>
+                        <Grid style={{ marginTop: '10px' }} container alignItems="flex-end" justify='center' spacing={2}>
+                            <Grid item xs={12}>
                                 <LoadingButton
                                     fullWidth
                                     size="large"
@@ -328,10 +399,11 @@ export default function TourForm({ actionType, tour, handleClose }) {
                             </Grid>
                         </Grid>
 
+
                     </Form>
                 </FormikProvider>
             </Container>
-        </Paper>
+      
     );
 }
 

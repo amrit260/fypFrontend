@@ -5,7 +5,7 @@ import Iconify from '../../components/Iconify';
 
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
-const sidebarConfig = [
+export const AdminSidebarConfig = [
   {
     title: 'dashboard',
     path: '/dashboard/app',
@@ -21,8 +21,18 @@ const sidebarConfig = [
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill')
   },
+  {
+    title: 'My Profile',
+    path: '/dashboard/myaccount',
+    icon: getIcon('healthicons:ui-user-profile')
+  },
+  {
+    title: 'Manage Bookings',
+    path: '/dashboard/managebookings',
+    icon: getIcon('bi:book-fill')
+  },
   // {
-  //   title: 'blog',
+  //   title: 'MyPrfile',
   //   path: '/dashboard/blog',
   //   icon: getIcon('eva:file-text-fill')
   // },
@@ -43,4 +53,15 @@ const sidebarConfig = [
   // }
 ];
 
-export default sidebarConfig;
+export const userSidebarConfig = [
+  {
+    title: 'My Profile',
+    path: '/dashboard/myaccount',
+    icon: getIcon('healthicons:ui-user-profile')
+  },
+  {
+    title: 'My Bookings',
+    path: '/dashboard/mybookings',
+    icon: getIcon('bi:book-fill')
+  },
+]

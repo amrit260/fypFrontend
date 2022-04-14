@@ -2,18 +2,16 @@
 import axios from 'axios'
 import { serverURL } from 'src/config';
 import { toast } from 'react-toastify';
-
+import {convertToFormData} from './convertToFormData'
 
 const AddItem =async (itemType,url,data)=>{
+
    console.log(data)
-  const formdata = new FormData()
-  Object.entries(data).forEach(
-   ([key, value]) => formdata.append(key,value)
-);
-   
-   
-    
-   console.log(formdata)
+  
+   const formdata = convertToFormData(data)
+  
+
+  
    try{
       let res = await axios({
           method: 'post',

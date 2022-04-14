@@ -1,13 +1,28 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { serverURL } from 'src/config'
 
 
-const Destinations = ({ tours }) => {
-  const serverURL = ''
+const Destinations = () => {
+
+  const [tours, setTours] = useState([])
+  const t = useSelector(state => state.tours)
+  console.log(t)
+  useEffect(() => {
+
+
+    setTours(t)
+
+
+  }, [])
+
+
   if (!tours) return ''
 
-  const destinations = tours.data.map((el, index) => {
+  const destinations = tours.map((el, index) => {
     return <div key={el.id} className="service-row">
       <div className="container">
 

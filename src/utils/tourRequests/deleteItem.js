@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 
 
 
-const deleteItem =async (url,id)=>{
+const deleteItem =async (itemType,url)=>{
 
 
    try{
       let res = await axios({
           method: 'delete',
-          url: `${url}/${id}`,
+          url,
           headers:{
             authorization : `Bearer ${localStorage.getItem('jwt')}`
          },
@@ -19,7 +19,9 @@ const deleteItem =async (url,id)=>{
       });
       if ((res.statusCode = 204)) {
          // setTours(res.data.data);
-         toast.success('tour deleted successfully');
+         toast.success(`${itemType} deleted successfully`,{
+            position:toast.POSITION.BOTTOM_RIGHT
+         });
 
          // setToursOnThisPage()
          return true

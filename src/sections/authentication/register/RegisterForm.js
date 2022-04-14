@@ -8,7 +8,7 @@ import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import { signUp } from 'src/redux/auth/authAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -17,15 +17,16 @@ export default function RegisterForm() {
  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+  const users = useSelector(state => state.auth);
 
-  useEffect(() => {
-    if (localStorage.getItem('loggedIn')) {
-
-
-        navigate(`/dashboard/app`);
+ 
+useEffect(() => {
+  if (users.loggedIn) {
+    navigate('/dashboard/myaccount', );
     }
-
-})
+    }, [users.loggedIn]);
+    
+    
 
 
   const RegisterSchema = Yup.object().shape({
@@ -33,6 +34,7 @@ export default function RegisterForm() {
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
       .required('First name required'),
+      phone: Yup.string().max(10, 'Invalid phone number').min(10,'invalid phone number').required('Phone number required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().min(8,'enter the min of 8 characters').max(15,'password should not contain more than 15 characters').required('Password is required!'),
     passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'passwords not matching').required('Confirm password is required')
@@ -43,7 +45,8 @@ export default function RegisterForm() {
       name:'',
       email: '',
       password: '',
-      passwordConfirm:''
+      passwordConfirm:'',
+      phone: ''
     },
     validationSchema: RegisterSchema,
     onSubmit: async (values) => {
@@ -51,13 +54,13 @@ export default function RegisterForm() {
    
         setSubmitting(true)
          dispatch(signUp(values))
-         if(localStorage.getItem('loggedIn')){
-          navigate('/dashboard/app', { replace: true });
+         if(users.loggedIn){
+          navigate('/dashboard/app');
         }
          
          setTimeout(() => {
             setSubmitting(false)
-         }, 1000);
+         }, 4000);
         
       
       
@@ -96,6 +99,14 @@ export default function RegisterForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+          />
+          <TextField
+            fullWidth
+            type="text"
+            label="Phone Number"
+            {...getFieldProps('phone')}
+            error={Boolean(touched.phone && errors.phone)}
+            helperText={touched.phone && errors.phone}
           />
 
           <TextField

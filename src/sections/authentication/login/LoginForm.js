@@ -46,7 +46,7 @@ export default function LoginForm() {
       dispatch(login(user));
       setSubmitting(true);
       if(users.loggedIn){
-        navigate('/dashboard/app', { replace: true });
+        navigate(`${user.role ==='admin'?'/dashboard/app':'/dashboard/myaccount'}`, { replace: true });
       }
       setTimeout(() => {
         setSubmitting(false);
@@ -58,7 +58,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (users.loggedIn) {
-      navigate('/dashboard/app', );
+      navigate('/dashboard/myaccount', );
       }
       }, [users.loggedIn]);
       

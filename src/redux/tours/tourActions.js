@@ -6,3 +6,4 @@ export const setTours = (tours) => {
     });
   };
 };
+

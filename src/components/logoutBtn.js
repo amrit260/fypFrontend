@@ -2,7 +2,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { logout } from "src/redux/auth/authAction";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import {MenuItem } from "@mui/material"
+import Iconify from './Iconify'
 
 const LogOutBtn = () => {
   
@@ -30,7 +31,22 @@ const LogOutBtn = () => {
 
  
  return (
-    <div className="signout nav-link nav-btn" onClick={handleLogOut} >  <i className="fas fa-sign-out-alt"></i></div>
+  <MenuItem
+    onClick={handleLogOut}
+  
+        sx={{ typography: 'body2', py: 1, px: 2.5 }}
+      >
+        <Iconify
+          icon="mdi:logout"
+          sx={{
+            mr: 2,
+            width: 24,
+            height: 24
+          }}
+        />
+      Logout
+       
+      </MenuItem>
   );
 
 };

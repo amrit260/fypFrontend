@@ -1,17 +1,19 @@
-const Footer = ()=>{
-    return   <footer>
+import { Link } from "react-router-dom"
+
+const Footer = () => {
+  return <footer>
     <div className="container">
       <ul>
         <li>
-          <a href="error.html"><i className="fab fa-facebook-f"></i></a>
+          <a href="#"><i className="fab fa-facebook-f"></i></a>
         </li>
         <li>
-          <a href="error.html"><i className="fab fa-twitter"></i></a>
+          <a href="#"><i className="fab fa-twitter"></i></a>
         </li>
         <li>
-          <a href="error.html"><i className="fab fa-linkedin-in"></i></a>
+          <a href="#"><i className="fab fa-linkedin-in"></i></a>
         </li>
-      
+
       </ul>
       <div className="row">
         <div className="col-lg-4 col-md-6 col-12">
@@ -28,26 +30,26 @@ const Footer = ()=>{
           <div className="item">
             <h4 className="text-uppercase">additional links</h4>
             <ul>
-              <li><a href="/contact">Contact us</a></li>
-              <li><a href="/destinations">Destinations</a></li>
-           
+              <li><Link to="/contact">Contact us</Link></li>
+              <li><Link to="/destinations">Destinations</Link></li>
+
             </ul>
           </div>
         </div>
         <div className="col-lg-4 col-md-6 col-12">
           <div className="item date">
             <h4 className="text-uppercase">Popular Tours</h4>
-            <p><a href="/nature">Nature Beauty</a></p>
-            <p><a href="/adventure">Adventure</a></p>
-            <p><a href="/jungle">Jungle Discovery</a></p>
-            
+            <p><a href="#">Nature Beauty</a></p>
+            <p><a href="#">Adventure</a></p>
+            <p><a href="#">Jungle Discovery</a></p>
+
           </div>
         </div>
-      
+
       </div>
     </div>
     <div className="copyright text-center">
-      <p>Copyright&copy; 2021 all rights reserved</p>
+      <p>Copyright&copy; 2022 all rights reserved</p>
     </div>
   </footer>
 }
